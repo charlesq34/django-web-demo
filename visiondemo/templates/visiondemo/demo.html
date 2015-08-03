@@ -1,0 +1,14 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'visiondemo/css/dropzone.css' %}" />
+<script src="{% static 'visiondemo/js/dropzone.js'  %}"></script>
+
+
+<form action="{% url 'visiondemo:fileupload' %}"
+      method="POST"
+      class="dropzone"
+      id="my-awesome-dropzone"
+      enctype="multipart/form-data"></form>
+
+<form action="{% url 'visiondemo:result' %}">
+<input type="submit">
+</form>
