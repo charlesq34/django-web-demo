@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     # ex: /visiondemo/fileupload
     url(r'^fileupload/$', views.fileupload, name='fileupload'),
-    # ex: /visiondemo/submit
+    # ex: /visiondemo/result
     url(r'^result/$', views.result, name='result'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': MEDIA_ROOT}),

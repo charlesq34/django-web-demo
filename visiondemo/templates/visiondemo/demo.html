@@ -1,14 +1,72 @@
 {% load staticfiles %}
+
+<html>
+<head>
+<meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="{% static 'visiondemo/css/dropzone.css' %}" />
 <script src="{% static 'visiondemo/js/dropzone.js'  %}"></script>
+<script>
+Dropzone.options.dropzoneUpload = {
+                accept: function(file, done) {
+                    console.log("uploaded");
+                    done();
+                },
+                init: function() {
+                    this.on("addedfile", function() {
+                        if (this.files[1]!=null){
+                          this.removeFile(this.files[0]);
+                        }
+                    });
+                }
+};
+</script>
+<script>
+function runBtn() {
+    document.getElementById('demo').innerHTML = document.getElementById('url').value;
+    document.getElementById('myinput').value = document.getElementById('url').value;
+    document.getElementById('url-upload').submit();
+}
+</script>
+<script>
+function go(url) {
+    document.getElementById("url").value = url;
+    document.getElementById('url-upload').myinput.value = url;
+    document.getElementById('url-upload').submit();
+}
+</script>
+<style>
+.imgthumb{width: 100px;}
+</style>
+</head>
+<body>
 
+<strong>Upload :</strong>
 
 <form action="{% url 'visiondemo:fileupload' %}"
       method="POST"
       class="dropzone"
-      id="my-awesome-dropzone"
-      enctype="multipart/form-data"></form>
-
-<form action="{% url 'visiondemo:result' %}">
+      id="dropzone-upload"
+      onchange="submit()"
+      style="width:200px"
+      enctype="multipart/form-data">
+      {% csrf_token %}
+</form>
+<form action="/visiondemo/result/">
 <input type="submit">
 </form>
+
+<strong>URL:</strong>
+<input type="text" id="url" name="url" style="width:200px;" value="http://">
+<input type="button" value="Run" onClick="runBtn();">
+<p id="demo"></p>
+
+
+<strong>Click One:</strong><br>
+<img src="http://places.csail.mit.edu/demo/1.jpg" class="imgthumb" onclick="go(this.src);">
+
+<form id='url-upload' method="POST" action="{% url 'visiondemo:fileupload' %}" enctype="multipart/form-data">
+<input type="hidden" name="myinput" id="myinput" value="0" maxlength="300" />
+</form>
+
+</body>
+</html>
