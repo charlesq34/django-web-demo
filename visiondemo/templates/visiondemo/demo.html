@@ -8,8 +8,12 @@
 <script>
 Dropzone.options.dropzoneUpload = {
                 accept: function(file, done) {
-                    console.log("uploaded");
-                    done();
+                    if (file.type != "image/jpeg" && file.type != "image/png") {
+                        done("Error! Files of this type are not accepted");
+                    } else {
+                        console.log("uploaded");
+                        done();
+                    }
                 },
                 init: function() {
                     this.on("addedfile", function() {
@@ -50,9 +54,7 @@ function go(url) {
       style="width:200px"
       enctype="multipart/form-data">
       {% csrf_token %}
-</form>
-<form action="/visiondemo/result/">
-<input type="submit">
+      <div class="dz-message" data-dz-message><span>Drop image here to upload</span></div>
 </form>
 
 <strong>URL:</strong>

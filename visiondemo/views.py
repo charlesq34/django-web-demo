@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
-from .forms import URLForm
+from .forms import URLForm, UploadFileForm
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -42,9 +42,19 @@ def result(request):
 @csrf_exempt
 def fileupload(request):
     if request.method == 'POST':
+        #try:
+        #    handle_uploaded_file(request.FILES['file'])
+        #    HttpResponse('ok')
+        #except:
+        #    pass
         try:
-            handle_uploaded_file(request.FILES['file'])
-            HttpResponse('ok')
+            print('try UploadFileForm ...')
+            form = UploadFileForm(request.POST, request.FILES)
+            print(form.is_valid())
+            if form.is_valid():
+                handle_uploaded_file(request.FILES['file'])
+                time.sleep(3)
+                return HttpResponseRedirect(reverse('visiondemo:result'))
         except:
             pass
 
