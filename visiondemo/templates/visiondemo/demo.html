@@ -21,6 +21,10 @@ Dropzone.options.dropzoneUpload = {
                           this.removeFile(this.files[0]);
                         }
                     });
+                    // AJAX form needs special redirect
+                    this.on("success", function(){
+                        window.location.pathname = "{% url 'visiondemo:result' %}";
+                    });
                 }
 };
 </script>
