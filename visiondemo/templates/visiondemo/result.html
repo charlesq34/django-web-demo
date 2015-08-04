@@ -1,1 +1,4 @@
-<img src="../media/tmp_out.jpg" width=200>
+<a href="{% url 'visiondemo:index' %}">Go Back</a><br>
+{% for img in image_list %}
+<img src="{{ img }}/" width=200>
+{% endfor %}
