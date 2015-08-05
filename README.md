@@ -14,3 +14,5 @@ Demo usage:
 python manage.py runserver
 
 python visiondemo/external_app.py
+
+Go to http://127.0.0.1:8000/visiondemo
