@@ -23,8 +23,9 @@ def result(request):
     if 'cookie_tag' in request.COOKIES:
         tag = request.COOKIES[ 'cookie_tag' ]
         print('cookie_tag: %s' % (tag))
-        img_fname = '../media/%s_tmp_out.jpg' % (tag)
-        return render(request, 'visiondemo/result.html', {'image_list': [img_fname]})
+        input_img_fname = '../media/%s_tmp.jpg' % (tag)
+        output_img_fname = '../media/%s_tmp_out.jpg' % (tag)
+        return render(request, 'visiondemo/result.html', {'image_list': [input_img_fname,output_img_fname]})
     else:
         return Http404("Error")
 
