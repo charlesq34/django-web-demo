@@ -17,7 +17,7 @@ Django version: 1.8.3
 `pip install -r requirements.txt` <br/>
 
 *[To start backend]* <br/>
-`python manage.py runserver` <br/>
+`python manage.py runserver 8080` <br/>
 `python visiondemo/external_app.py` <br/>
 
-Go to http://127.0.0.1:8000/visiondemo
+Go to http://127.0.0.1:8080/visiondemo
