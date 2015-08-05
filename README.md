@@ -1,18 +1,23 @@
 # visiondemo
 Django web app for vision algorithm demo.
 
-Python version: 3.4.3
-
+Tested under: <br/>
+Python version: 3.4.3 <br/>
 Django version: 1.8.3
 
-(recommendation: use virtualenv)
 
+**Usage:**
 
+`git clone https://github.com/charlesq34/visiondemo.git` <br/>
+`cd visiondemo` <br/>
 
-Demo usage:
+*[Optional]* <br/>
+`virtualenv -p <python3_path> venv` <br/>
+`source venv/bin/activate` <br/>
+`pip install -r requirements.txt` <br/>
 
-python manage.py runserver
-
-python visiondemo/external_app.py
+*[To start backend]* <br/>
+`python manage.py runserver` <br/>
+`python visiondemo/external_app.py` <br/>
 
 Go to http://127.0.0.1:8000/visiondemo
