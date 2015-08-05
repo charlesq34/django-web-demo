@@ -67,6 +67,7 @@ def fileupload(request):
             print(form.is_valid())
             if form.is_valid():
                 handle_uploaded_file(request.FILES['file'], fname)
+                print('Upload succeeded.')
                 dispatch_job(tag)
                 return response
         except:
@@ -79,6 +80,7 @@ def fileupload(request):
             if form.is_valid():
                 print(form.cleaned_data['myinput'])
                 os.system('wget %s -O %s' % (form.cleaned_data['myinput'], fname))
+                print('Download succeeded.')
                 dispatch_job(tag)
                 return response
         except:
