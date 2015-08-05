@@ -48,6 +48,7 @@ function go(url) {
 </head>
 <body>
 
+<h1>Vision Demo</h1>
 <strong>Upload :</strong>
 
 <form action="{% url 'visiondemo:fileupload' %}"
@@ -69,10 +70,22 @@ function go(url) {
 
 <strong>Click One:</strong><br>
 <img src="http://places.csail.mit.edu/demo/1.jpg" class="imgthumb" onclick="go(this.src);">
+<img src="http://places.csail.mit.edu/demo/2.jpg" class="imgthumb" onclick="go(this.src);">
+<img src="http://places.csail.mit.edu/demo/3.jpg" class="imgthumb" onclick="go(this.src);">
+<img src="http://places.csail.mit.edu/demo/4.jpg" class="imgthumb" onclick="go(this.src);">
 
 <form id='url-upload' method="POST" action="{% url 'visiondemo:fileupload' %}" enctype="multipart/form-data">
 <input type="hidden" name="myinput" id="myinput" value="0" maxlength="300" />
 </form>
+
+<br><br>
+{% if image_list %}
+<h3>Left: original image   Right: processed one.</h3>
+{% for img in image_list %}
+<img src="{{ img }}/" width=500px>
+{% endfor %}
+{% endif %}
+
 
 </body>
 </html>

@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # this is an example, just to filter the image
 def process_image(input_img_filename, output_img_filename):
     im = Image.open(input_img_filename)
-    im = im.filter(ImageFilter.SHARPEN)
+    im = im.filter(ImageFilter.CONTOUR)
     im.save(output_img_filename)
 
 

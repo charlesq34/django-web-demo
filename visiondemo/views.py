@@ -25,7 +25,7 @@ def result(request):
         print('cookie_tag: %s' % (tag))
         input_img_fname = '../media/%s_tmp.jpg' % (tag)
         output_img_fname = '../media/%s_tmp_out.jpg' % (tag)
-        return render(request, 'visiondemo/result.html', {'image_list': [input_img_fname,output_img_fname]})
+        return render(request, 'visiondemo/demo.html', {'image_list': [input_img_fname,output_img_fname]})
     else:
         return Http404("Error")
 
