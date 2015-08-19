@@ -5,4 +5,5 @@ class URLForm(forms.Form):
 
 
 class UploadFileForm(forms.Form):
-    file = forms.FileField()
+    #file = forms.FileField()
+    pos = forms.CharField(widget=forms.HiddenInput())

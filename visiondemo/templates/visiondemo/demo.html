@@ -2,81 +2,51 @@
 
 <html>
 <head>
-<meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="{% static 'visiondemo/css/dropzone.css' %}" />
-<script src="{% static 'visiondemo/js/dropzone.js'  %}"></script>
-<script>
-Dropzone.options.dropzoneUpload = {
-                accept: function(file, done) {
-                    if (file.type != "image/jpeg" && file.type != "image/png") {
-                        done("Error! Files of this type are not accepted");
-                    } else {
-                        console.log("uploaded");
-                        done();
-                    }
-                },
-                init: function() {
-                    this.on("addedfile", function() {
-                        if (this.files[1]!=null){
-                          this.removeFile(this.files[0]);
-                        }
-                    });
-                    // AJAX form needs special redirect
-                    this.on("success", function(){
-                        window.location.pathname = "{% url 'visiondemo:result' %}";
-                    });
-                }
-};
-</script>
-<script>
-function runBtn() {
-    document.getElementById('demo').innerHTML = document.getElementById('url').value;
-    document.getElementById('myinput').value = document.getElementById('url').value;
-    document.getElementById('url-upload').submit();
-}
-</script>
-<script>
-function go(url) {
-    document.getElementById("url").value = url;
-    document.getElementById('url-upload').myinput.value = url;
-    document.getElementById('url-upload').submit();
-}
-</script>
-<style>
-.imgthumb{width: 100px;}
-</style>
+    <meta charset="utf-8">
+    <style>
+    .imgthumb{width: 100px;}
+    </style>
+    <!-- add styles -->
+    <link href="{% static 'visiondemo/css/main.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'visiondemo/css/jquery.Jcrop.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- add scripts -->
+    <script src="{% static 'visiondemo/js/jquery.min.js' %}"></script>
+    <script src="{% static 'visiondemo/js/jquery.Jcrop.min.js' %}"></script>
+    <script src="{% static 'visiondemo/js/script.js' %}"></script>
 </head>
+
 <body>
 
 <h1>Vision Demo</h1>
 <strong>Upload :</strong>
 
-<form action="{% url 'visiondemo:fileupload' %}"
-      method="POST"
-      class="dropzone"
-      id="dropzone-upload"
-      onchange="submit()"
-      style="width:200px"
-      enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="dz-message" data-dz-message><span>Drop image here to upload</span></div>
-</form>
+<div class="bbody">
+    <!-- upload form -->
+    <form id="upload_form" method="post" action="{% url 'visiondemo:fileupload' %}" enctype="multipart/form-data" onsubmit="return checkForm()">
+        <!-- hidden crop params -->
+        <input type="hidden" id="x1" name="x1" />
+        <input type="hidden" id="y1" name="y1" />
+        <input type="hidden" id="x2" name="x2" />
+        <input type="hidden" id="y2" name="y2" />
 
-<strong>URL:</strong>
+        <h2>Step1: Please select image file</h2>
+        <div><input type="file" name="image_file" id="image_file" onchange="fileSelectHandler()" /></div>
+
+        <div class="error"></div>
+
+        <div class="step2">
+            <h2>Step2: Please select a crop region</h2>
+            <img id="preview" />
+           <br>
+           <input type="submit" value="Submit" />
+        </div>
+    </form>
+</div>
+
+<!-- <strong>URL:</strong>
 <input type="text" id="url" name="url" style="width:200px;" value="http://">
-<input type="button" value="Run" onClick="runBtn();">
-<p id="demo"></p>
-
-
-<strong>Click One:</strong><br>
-<img src="http://places.csail.mit.edu/demo/1.jpg" class="imgthumb" onclick="go(this.src);">
-<img src="http://places.csail.mit.edu/demo/2.jpg" class="imgthumb" onclick="go(this.src);">
-<img src="http://places.csail.mit.edu/demo/3.jpg" class="imgthumb" onclick="go(this.src);">
-<img src="http://places.csail.mit.edu/demo/4.jpg" class="imgthumb" onclick="go(this.src);">
-
-<form id='url-upload' method="POST" action="{% url 'visiondemo:fileupload' %}" enctype="multipart/form-data">
-<input type="hidden" name="myinput" id="myinput" value="0" maxlength="300" />
-</form>
+<input type="button" value="Run" onClick="urlHandler();">
+-->
 
 <br><br>
 {% if image_list %}

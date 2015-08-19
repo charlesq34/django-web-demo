@@ -3,6 +3,8 @@ import random
 import string
 import time
 import uuid
+from io import BytesIO
+from PIL import Image
 
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext, loader
@@ -35,6 +37,19 @@ def handle_uploaded_file(f, fname):
         for chunk in f.chunks():
             dst.write(chunk)
 
+def handle_uploaded_file(f, fname, pos): # pos contains x1,y1,x2,y2
+    #output = BytesIO()
+    #for chunk in f.chunks():
+    #    output.write(chunk)
+    # TODO: write to temp file or memory file!
+    with open(fname, 'wb+') as dst:
+        for chunk in f.chunks():
+            dst.write(chunk)
+    im = Image.open(fname)
+    im = im.crop([pos['x1'],pos['y1'],pos['x2'],pos['y2']])
+    im.save(fname)
+
+
 def loadFromExternalApp(filepath):
     while not os.path.exists(filepath+'.done'):
         time.sleep(1)
@@ -64,15 +79,19 @@ def fileupload(request):
         # FROM DROPZONE UPLOAD
         try:
             print('try UploadFileForm ...')
-            form = UploadFileForm(request.POST, request.FILES)
-            print(form.is_valid())
-            if form.is_valid():
-                handle_uploaded_file(request.FILES['file'], fname)
-                print('Upload succeeded.')
-                dispatch_job(tag)
-                return response
-        except:
-            pass
+            crop_pos = dict()
+            keys = ['x1', 'y1', 'x2', 'y2']
+            for i in range(len(keys)):
+                crop_pos[keys[i]] = int(request.POST[keys[i]])
+            print(crop_pos)
+            handle_uploaded_file(request.FILES['image_file'], fname, crop_pos)
+            print('Upload succeeded.')
+            dispatch_job(tag)
+            return response
+        except Exception as ex:
+            template = "An exception of type {0} occured. Arguments:\n{1!r}"
+            message = template.format(type(ex).__name__, ex.args)
+            print(message)
         # FROM URL TEXT
         try:
             print('URL form...')
