@@ -8,3 +8,10 @@ class Person(models.Model):
     def __str__(self):
         return self.first_name + " "+ self.last_name
     
+
+class Phones(models.Model):
+    number = models.IntegerField()
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.number)
